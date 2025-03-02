@@ -3,34 +3,36 @@ from langchain_core.messages import SystemMessage, HumanMessage
 
 
 '''
-Calling Local LLMs
-Passing a single message or a list of messages
+Call Local LLMs
+Pass a single message or a list of messages
 Types of messages - SystemMessage, HumanMessage, AIMessage, AIMessageChunk, ToolMessage
 Types of Roles - system, user, assistant, tool
 Streaming output
 '''
 
 
-# Calling local LLMs - make sure Ollama is running
+# Call local LLMs - make sure Ollama is running
 llm = OllamaLLM(model="llama3.1")
-# Regular chat
+# Regular message
+print("--------------TEST-----------------")
 response = llm.invoke("Are you here?")
 print(response)
 
-# List of messages
+# Pass list of messages
 '''
 Available Roles: system, user, assistant, tool
 '''
 messages = [
-    {"role": "system", "content": "You are an decorated and disciplined army officer."},
+    {"role": "system", "content": "You are a wellness expert."},
     {"role": "user", "content": "How can you serve me?"}
 ]
 
+print("------------WELLNESS EXPERT-------------")
 response = llm.invoke(messages)
 print(response)
-print("-------------------------------")
 
-# Another way to define messages through 
+
+# Substiture for "role"
 '''
 Message Types: SystemMessage, HumanMessage, AIMessage, AIMessageChunk, ToolMessage
 '''
@@ -38,10 +40,10 @@ messages = [
     SystemMessage("You are a comedian"),
     HumanMessage("How are you feeling today?")
 ]
-
+print("-----------COMEDIAN--------------")
 response = llm.invoke(messages)
 print(response)
-print("-------------------------------")
+
 
 
 # Streaming output
@@ -51,6 +53,7 @@ messages = [
 ]
 
 response = llm.stream(messages)
+print("-----------SARCASTIC TEACHER CHUNKS--------------")
 for chunk in response:
     # Added _ just to see how a chunk looks
     print(chunk, end="_")
