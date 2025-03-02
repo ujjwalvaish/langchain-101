@@ -9,17 +9,17 @@ Ollama installed with Deepseek-R1 and Llama3.1 models
 Dependencies from requirements.txt
 
 # Tutorial Files
-1-ConnectToOllama.py - Establish your first connection to local LLMs through Ollama
-2-PromptTemplate.py - Create dynamic, reusable prompts with variables
-3-OutputParsers.py - Transform raw text outputs into structured data
-4-RunnablesAndLCEL.py - Build flexible pipelines with LangChain Expression Language
-5-Custom_Runnables.py - Extend functionality with your own custom components
-6-Tools.py - Add capabilities through external tools like web search and databases
-7-Embeddings.py - Implement semantic understanding with vector representations
-8-VectorStores.py - Create efficient knowledge bases for semantic search
-9-SimpleLangGraphNoLLM.py - Develop sequential workflows that don't require LLM intervention
-10-MemoryWithLangGraph.py - Enable conversational context with memory systems
-11-RoutingAgentInLangGraph.py - Build autonomous agents that make decisions about tools and workflows
+1. ConnectToOllama.py - Establish your first connection to local LLMs through Ollama
+2. PromptTemplate.py - Create dynamic, reusable prompts with variables
+3. OutputParsers.py - Transform raw text outputs into structured data
+4. RunnablesAndLCEL.py - Build flexible pipelines with LangChain Expression Language
+5. Custom_Runnables.py - Extend functionality with your own custom components
+6. Tools.py - Add capabilities through external tools like web search and databases
+7. Embeddings.py - Implement semantic understanding with vector representations
+8. VectorStores.py - Create efficient knowledge bases for semantic search
+9. SimpleLangGraphNoLLM.py - Develop sequential workflows that don't require LLM intervention
+10. MemoryWithLangGraph.py - Enable conversational context with memory systems
+11. RoutingAgentInLangGraph.py - Build autonomous agents that make decisions about tools and workflows
 
 # Getting Started
 1. Clone this repository
