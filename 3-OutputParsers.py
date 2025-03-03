@@ -3,7 +3,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain.output_parsers import CommaSeparatedListOutputParser, PydanticOutputParser
 from pydantic import BaseModel, Field
 
-llm = OllamaLLM(model="llama3.1")
+llm = OllamaLLM(model="deepseek-r1")
 
 
 # Multiple parsers available - Str, CSV, JSON, Pydantic, DateTime, PandasDataframe
@@ -12,12 +12,12 @@ llm = OllamaLLM(model="llama3.1")
 Remember LLMs just generate text, we cannot call response["name] or response["age"], here
 is where paresers help.
 
-Most parsers work in 2 steps - 
-0. Instantiate the output parser
-1. Add the parsing instruction in the prompt, to instruct the model to return the 
+Most parsers work in 3 steps - 
+1. Instantiate the output parser
+2. Add the parsing instruction in the prompt, to instruct the model to return the 
 output in a particular format using .get_format_instructions() method (just a wrapper for adding
 more prompt instructions)
-2. Parse the model output(text) to the requested format - using .parse() method
+3. Parse the model output(text) to the requested format - using .parse() method
 '''
 
 # CSV Parser
