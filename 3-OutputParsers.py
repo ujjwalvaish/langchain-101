@@ -14,9 +14,10 @@ is where paresers help.
 
 Most parsers work in 2 steps - 
 0. Instantiate the output parser
-1. Add the parsing instruction in the prompt, to instruct the model that output is
-expected in a particular format using .get_format_instructions() method
-2. Parse the model output(text) to the requested format - .parse()
+1. Add the parsing instruction in the prompt, to instruct the model to return the 
+output in a particular format using .get_format_instructions() method (just a wrapper for adding
+more prompt instructions)
+2. Parse the model output(text) to the requested format - using .parse() method
 '''
 
 # CSV Parser
@@ -31,18 +32,18 @@ csv_prompt = csv_template.invoke("List the 10 most popular car companies in the 
                             any other text.")
 print(csv_prompt)
 
-# Raw response
-response = llm.invoke(csv_prompt)
-print(type(response))
-print(response)
-# Parsed response
+response = llm.invoke(csv_prompt) # repsonse is str
+print("---------------LIST OF CARS---------------------")
+print(f"Original response type - {type(response)}")
 parsed_response = csv_parser.parse(response)
-print(type(parsed_response))
+print(f"Parsed response type - {type(parsed_response)}")
 print(response)
-for res in parsed_response:
+for res in parsed_response: # List
     print(res)
 print("----------------------------------")
-# Pydantic parser - to extract multiplt "properties" from the LLM output
+
+
+# Pydantic parser - to extract multiple "properties" from the LLM output
 '''
 This parser parses the response into a defined TypedDict class, 
 JSON schema or a Pydantic class
@@ -68,14 +69,15 @@ pydantic_template = PromptTemplate(
 book_prompt = pydantic_template.invoke({"question" : "Tell me the most helpful and insightful Non fiction book \
                                      published in the last 10 years that I should read?"})
 
-print(book_prompt)
+# print(book_prompt) # Check .get_format_instructions()
 response = llm.invoke(book_prompt)
-print(response)
-print(type(response))
 parsed_response = pydantic_parser.parse(response)
-print(type(parsed_response))
+print(f"Parsed response type - {type(parsed_response)}")
 print(response)
 print("----------------------------------")
+
+
+
 ''' 
 For parsing outputs, we first need to instruct the model on how to return
 the output, and then parse the returned output.
@@ -90,6 +92,6 @@ structured_llm = llm.with_structured_output(Book)
 response = structured_llm.invoke("Tell me the most helpful non fiction book that would be help \
                                 me create a strong healthy and productive mind that I should read?")
 
-print(type(response))
+print(f"Structured LLM response type - {type(response)}")
 print(response)
 print(response.name)
