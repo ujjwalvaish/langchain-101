@@ -1,7 +1,7 @@
 
 from langchain_ollama import OllamaEmbeddings
 '''
-Embeddings are numerical representation of text.
+Embeddings, here are numerical representation of text.
 text can be a word, a pragraph or a book. Embeddings
 capture the meaning of the text i.e. words or sentences 
 having similar meanings will be close to each other in the 
@@ -15,6 +15,6 @@ gap very nicely.
 
 embeddings = OllamaEmbeddings(model = "llama3.1")
 vec1 = embeddings.embed_query("Hey, what's up!")
-print(type(vec1)) # list
+print(type(vec1)) # list aka vector
 print(f"Length  = {len(vec1)}") # 4096 for this embedding model
 print(vec1[:100])
