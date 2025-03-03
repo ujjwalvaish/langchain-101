@@ -8,7 +8,7 @@ from langchain_core.messages import HumanMessage
 '''
 Creating a dynamic routing system that transforms the AI model into a kind of “router.”
 The routing system uses conditional edges to determine which node to run next based on 
-AI’s response. By externalizing decision-making to these conditional edges, we achieve 
+LLM’s response. By externalizing decision-making to these conditional edges, we achieve 
 a branched and scalable workflow where multiple nodes collaborate, allowing the AI to 
 intelligently control the workflow’s direction.
 '''
@@ -19,13 +19,6 @@ class Conversation(MessagesState):
 def tool_calling_llm(state: Conversation):
     response = llm.invoke(state["messages"])
     return {"messages": [response]}
-
-# OLD GRAPH
-# builder = StateGraph(Conversation)
-# builder.add_node("tool_calling_llm", tool_calling_llm)
-# builder.add_edge(START, tool_calling_llm)
-# builder.add_edge(tool_calling_llm, END)
-# graph =  builder.compile()
 
 '''
 We will introduce a routing mechanism to examine the AI’s response and 
