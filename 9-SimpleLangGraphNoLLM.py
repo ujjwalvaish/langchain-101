@@ -8,7 +8,8 @@ This file just illustrates the components of a LangGraph,
 without interacting with an LLM. 
 
 LangGraph is a specialized library designed to build stateful systems, 
-often involving multi agent non linear workflows.
+often involving multi agent non linear workflows. The stateful system has nodes (state) and 
+edges (move to a new state).
 
 Agents rely on LLMs to evaluate real time inputs and DECIDE the next course of action
 '''
@@ -61,7 +62,6 @@ builder.add_conditional_edges("node1", decide_toss)
 builder.add_edge("node2", END)
 builder.add_edge("node3", END)
 
-# Compile the graph for sanity checks
 graph =  builder.compile()
 
 res = graph.invoke({"graph_state": ""})
