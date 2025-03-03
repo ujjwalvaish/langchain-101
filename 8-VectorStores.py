@@ -10,7 +10,7 @@ Vector stores are special databases designed to store
 vectors, instead of traditional rows and columns.
 
 We can use vector stores to - 
-1. Find the most (or k most) relevant text, for user's query
+1. Find the most (or k most) relevant text for user's query
 2. Recommend similar items
 This approach is crucial in natural language tasks because we care about 
 “closeness in meaning,” not identical string matches as in traditional 
@@ -18,18 +18,17 @@ querying e.g. SELECT * FROM TABLE where COLUMN_NAME = X
 '''
 
 embeddings = OllamaEmbeddings(model = "llama3.1")
-# Simples vector store
+# Simple vector store
 vector_store1 = InMemoryVectorStore(embeddings)
-
 # A more sophisticated vector store - performs much better
 vector_store2 = Chroma(embedding_function = embeddings)
 
 
 '''
-Now we will add text to our vector stores. This involves - 
+Now we will store text in our vector stores. This involves - 
 1. Fetch documents (text)
 2. Generate embeddings
-3. Store it in a vector DB
+3. Store it in vector DB
 
 Documents in langchain include both the text and their metadata e.g. source and id
 '''
@@ -62,8 +61,8 @@ documents = [document_1, document_2, document_3, document_4]
 # Next, we create unique Ids for all documents for tracking
 uuids = [str(uuid4()) for _ in range(len(documents))]
 
-vector_store1.add_documents(documents = documents, ids = uuids)
-vector_store2.add_documents(documents = documents, ids = uuids)
+vector_store1.add_documents(documents = documents, ids = uuids) # Simple
+vector_store2.add_documents(documents = documents, ids = uuids) # ChromaDB
 
 # Now we can query the vector store
 query = "What clothers should I wear tomorrow?"
