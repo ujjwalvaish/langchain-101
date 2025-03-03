@@ -13,6 +13,7 @@ instruction  = "Create an invitation email to the recipient that is {recipient_n
 
 invitation_template = PromptTemplate.from_template(instruction)
 # invitation_template is an object containing input_variables, template, 
+# Uncomment the 2 lines below to view the structure of prompt template
 # for key in invitation_template:
 #     print(key)
 
@@ -28,7 +29,7 @@ event_info = {
 print(f"Invitation template: {invitation_template}")
 print("-------------------------------")
 
-# Prompt template can directly be invoked
+# Prompt template can directly be invoked to fill the placeholders
 invite = invitation_template.invoke(event_info)
 print(invite)
 print("-------------------------------")
