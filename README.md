@@ -27,11 +27,8 @@ Dependencies from requirements.txt
 3. Make sure Ollama is running with the required models
 4. Start with 1-ConnectToOllama.py and progress through each tutorial
 
-#The Journey
+# The Journey
 These tutorials take you from a simple LLM chat interface to a sophisticated research assistant that can understand complex queries, access external knowledge, remember context, and make autonomous decisions about how to solve problems - all while maintaining privacy and control with local models.
 
 # Contributing
 Feedback and contributions are welcome! Feel free to submit issues or pull requests.
-
-# License
-MIT
