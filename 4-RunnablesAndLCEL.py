@@ -7,8 +7,6 @@ from langchain.schema.runnable import RunnableLambda
 llm = OllamaLLM(model="llama3.1")
 
 '''
-Here are the concise definitions and examples:
-
 # Runnable
 A callable unit of work that encapsulates tasks like LLM calls, database queries, or API calls.
 Each runable must implement methods such as invoke(), batch(), and stream().
@@ -23,7 +21,7 @@ Langchain has overloaded the pipe "|" operator. This enables runnables to be str
 sentiment_prompt_template = PromptTemplate(
     input_variables=["feedback"],
     template="Determine the sentiment of this feedback and reply in one word as either \
-        'Positive', 'Neutral', or 'Negative':\n\n{feedback}"
+        POSITIVE, NEUTRAL, or NEGATIVE:\n\n{feedback}"
 )
 
 bad_feedback = "The fan was horrible."
@@ -36,18 +34,11 @@ print(chain.invoke({"feedback": bad_feedback}))
 print(chain.invoke({"feedback": good_feedback}))
 print(chain.invoke({"feedback": neutral_feedback}))
 
-# Without StrOutputParser
-print("WITHOUT OUTPUT PARSER")
-chain2 = sentiment_prompt_template | llm
-print(chain2.invoke({"feedback": bad_feedback}))
-print(chain2.invoke({"feedback": good_feedback}))
-print(chain2.invoke({"feedback": neutral_feedback}))
-
 # Creating a bigger chain
 # Summarize the key info from the review and also generate a sentiment
 
 '''
-Raw feedback -> Parsed feedback (Only key info) -> Summary of feedback -> Sentiment 
+Raw feedback -> 1. Get key info -> 2. Summary of feedback -> 3. Sentiment 
 '''
 parse_template = PromptTemplate(
     input_variables = ["raw_feedback"],
@@ -59,11 +50,11 @@ summary_template = PromptTemplate(
     template = "Create a one sentence summary for this feedback. /n {parsed_feedback} "
 )
 
-# Now we need to pass the output of one runnable to next, using the same argument names
+# Pass the output of one runnable to next, using the same argument names
 '''
 RunnableLambda: Turn custom functions into runnables
 '''
-# Just creates a dictionary from the returned string, to have the same argument name
+# Creates a dict matching the key from 1st LLM call to required argument of second LLM call
 format_parsed_output = RunnableLambda(lambda output: {"parsed_feedback" : output})
 format_summary_output = RunnableLambda(lambda output: {"feedback" : output})
 
@@ -73,6 +64,5 @@ user_feedback = "The delivery was late, and the product was damaged when it arri
 
 # Nested chain
 # chain = sentiment_prompt_template | llm | StrOutputParser() as defined above
-chain3 = parse_template | llm | format_parsed_output | summary_template | llm | format_summary_output | chain
-chain4 = parse_template | llm | format_parsed_output | summary_template | llm | format_summary_output | sentiment_prompt_template | llm | StrOutputParser()
-print(chain3.invoke({"raw_feedback": user_feedback}))
+chain2 = parse_template | llm | format_parsed_output | summary_template | llm | format_summary_output | chain
+print(chain2.invoke({"raw_feedback": user_feedback}))

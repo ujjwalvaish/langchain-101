@@ -3,7 +3,7 @@ from langchain_core.prompts import PromptTemplate
 from langchain.output_parsers import CommaSeparatedListOutputParser, PydanticOutputParser
 from pydantic import BaseModel, Field
 
-llm = OllamaLLM(model="deepseek-r1")
+llm = OllamaLLM(model="deepseek-r1") # try multiple LLMs here
 
 
 # Multiple parsers available - Str, CSV, JSON, Pydantic, DateTime, PandasDataframe
