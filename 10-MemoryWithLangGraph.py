@@ -5,8 +5,8 @@ from langgraph.graph import StateGraph, START, END
 from langchain_core.messages import HumanMessage
 
 '''
-Use memory in state as a way to remmember the context of conversations to
-pass on to the LLM.
+Use memory in state as a way to remmember the context of conversations that 
+is passed on to the LLM for context.
 '''
 
 llm = ChatOllama(model = "llama3.1")
@@ -42,11 +42,17 @@ builder.add_edge("call_llm_with_memory", END)
 graph = builder.compile()
 
 
-messages = graph.invoke({"messages" : HumanMessage(content="What is 17 * 5?")})
-messages_2 = graph.invoke({"messages" : HumanMessage(content="Hi, how are you?")})
 
-# Atleast uses tool correctly
+messages = graph.invoke({"messages" : HumanMessage(content="Hi, how are you?")})
+# Prints all messages in memory
 for m in messages["messages"]:
+    if m.content:
+        print((m.content))
+    else:
+        print(multiply.invoke(m.tool_calls[0]["args"]))
+
+messages_2 = graph.invoke({"messages" : HumanMessage(content="What is 17 * 5?")})
+for m in messages_2["messages"]:
     if m.content:
         print((m.content))
     else:
