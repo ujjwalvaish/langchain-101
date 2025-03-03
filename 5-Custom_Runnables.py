@@ -13,12 +13,6 @@ user_feedback_pos = "The delivery was early, and the product was perfect when it
     Also, the customer support team was very helpful in keeping me up to date."
 
 # Raw feedback -> Parsed feedback -> Summary -> Sentiment
-sentiment_template = PromptTemplate(
-    input_variables=["feedback"],
-    template="Determine the sentiment of this feedback and reply in one word only as either \
-        'Positive', 'Neutral', or 'Negative':\n\n{feedback}"
-)
-
 parse_template = PromptTemplate(
     input_variables = ["raw_feedback"],
     template = "Gather the key information from this user feedback. /n {raw_feedback} "
@@ -29,25 +23,31 @@ summary_template = PromptTemplate(
     template = "Create a one sentence summary for this feedback. /n {parsed_feedback} "
 )
 
+sentiment_template = PromptTemplate(
+    input_variables=["feedback"],
+    template="Determine the sentiment of this feedback and reply in one word only as either \
+        'Positive', 'Neutral', or 'Negative':\n\n{feedback}"
+)
+
 
 # Take different actions depending on the sentiment of feedback
-positive_template = PromptTemplate(
+positive_response_template = PromptTemplate(
     input_variables=["feedback"],
     template="Given the feedback, draft a thank you message for the user and request them to leave a positive rating on our webpage:\n\n{feedback}"
 )
 # Neutral feedback
-neutral_template = PromptTemplate(
+neutral_response_template = PromptTemplate(
     input_variables=["feedback"],
     template="Given the feedback, draft a message for the user and request them provide more details about their concern:\n\n{feedback}"
 )
-negative_template = PromptTemplate(
+negative_response_template = PromptTemplate(
     input_variables=["feedback"],
     template="Given the feedback, draft an apology message for the user and mention that their concern has been forwarded to the relevant department:\n\n{feedback}"
 )
 
-positive_chain  = positive_template | llm | StrOutputParser()
-negative_chain  = negative_template | llm | StrOutputParser()
-neutral_chain  = neutral_template | llm | StrOutputParser()
+positive_chain  = positive_response_template | llm | StrOutputParser()
+negative_chain  = negative_response_template | llm | StrOutputParser()
+neutral_chain  = neutral_response_template | llm | StrOutputParser()
 
 '''
 Conditional Routing using custom functions
@@ -68,7 +68,7 @@ format_parsed_feedback = RunnableLambda(lambda output: {"parsed_feedback": outpu
 summary_chain = parse_template | llm | format_parsed_feedback | summary_template | llm | StrOutputParser()
 sentiment_chain = sentiment_template | llm | StrOutputParser()
 
-# manually passing differnet chains, as we need to see intermediate outputs
+# Manually pass differnet chains to see intermediate outputs
 # Run individual chains first
 summary = summary_chain.invoke({"raw_feedback": user_feedback_neg})
 sentiment = sentiment_chain.invoke({"feedback": summary})
